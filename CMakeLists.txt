@@ -14,7 +14,9 @@ include_directories(
     ./include
     ./src
     ./lib
-    ./lib/gopt )
+    ./lib/gopt
+    ./lib/catch
+    ./tests )
 
 
 # target
@@ -23,7 +25,9 @@ add_executable(
     ./src/main.cpp 
     ./src/ASCII.cpp
     ./lib/gopt/gopt-errors.cpp
-    ./lib/gopt/gopt.cpp )
+    ./lib/gopt/gopt.cpp
+    # ./lib/catch/catch_amalgamated.cpp 
+    )
 
 # opencv
 find_package(OpenCV REQUIRED)

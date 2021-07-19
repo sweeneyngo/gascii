@@ -23,7 +23,7 @@ const std::string ASCII_BRIGHTNESS_SIMPLE = " .:-=+*#%@";
  * int set = ASCII string set.
  */
 
-ASCII::ASCII(std::string path, double tw, int sv, int iv, int mode, int set) {
+ASCII::ASCII(std::string path, double tw, int sv, int iv, int mode, int set, int html) {
     
     m_path = path;
     m_tw = tw;
@@ -31,6 +31,7 @@ ASCII::ASCII(std::string path, double tw, int sv, int iv, int mode, int set) {
     m_iv = iv;
     m_mode = mode;
     m_set = set ? ASCII_BRIGHTNESS_COMPLEX : ASCII_BRIGHTNESS_SIMPLE;
+    m_html = html;
 
     Mat3b image, dst;
     cout << m_path << endl;
@@ -89,13 +90,26 @@ vector<vector<uchar>> ASCII::map(vector<vector<int>> v) {
     return res;
 }
 
-void ASCII::print(vector<vector<uchar>> v) {
+string ASCII::print(vector<vector<uchar>> v) {
+
+    string res;
     for (int r = 0; r < v.size(); ++r) {
-        for (int c = 0; c < v[r].size(); ++c)
-            for (int j = 0; j < 1; ++j)
-                cout << v[r][c];
-        cout << endl;
+        for (int c = 0; c < v[r].size(); ++c) {
+            for (int j = 0; j < 1; ++j) {
+                if (m_html) {
+                    res.append("<span style=\"color:#000000;\">");
+                    res.append(1, v[r][c]);
+                    res.append("</span>");
+                } else
+                    res += '\n';
+            }
+            if (m_html)
+                    res.append("<br/>");
+            else
+                res += '\n';
+        }
     }
+    return res;
 }
 
 void ASCII::printSize() {

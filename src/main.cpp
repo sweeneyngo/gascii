@@ -4,6 +4,7 @@
 #include <sys/ioctl.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <fstream>
 
 #include "gopt.h"
 #include "ASCII.h"
@@ -32,9 +33,11 @@ int main(int argc, char** argv) {
     int sv              = 1;
     int iv              = 0;
     int mode            = RGB_LIGHTNESS;
+    int html            = 0;
     string pimg;
+    string fileName = "";
 
-    struct option options[7];
+    struct option options[8];
 
     options[0].long_name  = "help";
     options[0].short_name = 'h';
@@ -60,7 +63,15 @@ int main(int argc, char** argv) {
     options[5].short_name = 'a';
     options[5].flags      = GOPT_ARGUMENT_REQUIRED;
 
-    options[6].flags      = GOPT_LAST;
+    options[6].long_name  = "output";
+    options[6].short_name = 'o';
+    options[6].flags      = GOPT_ARGUMENT_REQUIRED;
+
+    options[7].long_name  = "html";
+    options[7].short_name = 'h';
+    options[7].flags      = GOPT_ARGUMENT_REQUIRED;
+
+    options[7].flags      = GOPT_LAST;
 
     argc = gopt(argv, options);
     gopt_errors(argv[0], options);
@@ -108,8 +119,31 @@ int main(int argc, char** argv) {
         mode = double(atoi(options[5].argument));
     }
 
-    ASCII* img = new ASCII(pimg, tw, sv, iv, RGB_LIGHTNESS, mode);
-    img->print(img->map(img->condense()));
+    if (options[6].count)
+    {
+        cout << options[6].argument << endl;
+        fileName = options[6].argument;
+    }    
+    
+    if (options[7].count)
+    {
+        cout << options[7].argument << endl;
+        html = options[7].argument;
+    }
+
+
+
+    ASCII* img = new ASCII(pimg, tw, sv, iv, RGB_LIGHTNESS, mode, html);
+
+    if (fileName != "") {
+        ofstream fileOut;
+        fileOut.open(fileName);
+        fileOut << img->print(img->map(img->condense()));
+        fileOut.close();
+        return 0;
+    }
+    
+    cout << img->print(img->map(img->condense())) << endl;
     
     return 0;
 }

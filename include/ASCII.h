@@ -6,10 +6,17 @@
 
 class ASCII {
 public:
-    ASCII(std::string path, double tw, int sv, int iv, int mode, int set);
+    ASCII(
+        std::string path, 
+        double tw, 
+        int sv, 
+        int iv, 
+        int mode, 
+        int set, 
+        int html);
     std::vector<std::vector<int>> condense();
     std::vector<std::vector<uchar>> map(std::vector<std::vector<int>> v);
-    void print(std::vector<std::vector<uchar>> v);
+    std::string print(std::vector<std::vector<uchar>> v);
     void printSize();
     void displayImage();
 private:
@@ -20,6 +27,7 @@ private:
     int m_iv;
     int m_mode;
     std::string m_set;
+    int m_html;
 
     // helper functions
     int maximum(int a, int b, int c) {
