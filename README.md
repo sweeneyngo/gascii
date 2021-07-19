@@ -2,7 +2,7 @@
 
 # goals
 
-- [ ] html conversion compatibility
+- [x] html conversion compatibility
 - [ ] png output
 - [ ] color output
 - [ ] video
