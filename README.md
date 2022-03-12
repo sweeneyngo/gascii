@@ -1,9 +1,6 @@
 # gascii
 
-# goals
-
-- [x] html conversion compatibility
-- [ ] png output
-- [ ] color output
-- [ ] video
-- [ ] discord websocket
+- [x] html-compatible
+- [ ] exports
+- [ ] term-color
+- [ ] api websocket
